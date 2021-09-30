@@ -1,15 +1,19 @@
 package WM;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import static org.testng.Assert.assertEquals;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -51,30 +55,33 @@ public class FreshWorksTest {
 
 		}
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		driver.get("https://www.freshworks.com/");
+		driver.get("https://google.com/ncr");
 
 	}
 
 	@Test(priority = 1)
 	public void freshWorkslogoTest() {
-		boolean flag = false;
-			flag = driver.findElement(By.cssSelector("a.logo.logo-fworks")).isDisplayed();
-			Assert.assertTrue(flag);
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		driver.findElement(By.name("q")).sendKeys("cheese" + Keys.ENTER);
+		WebElement firstResult = wait.until(presenceOfElementLocated(By.cssSelector("h3")));
+		assertEquals(driver.getTitle(), "cheese - Google Search");
+		System.out.println(firstResult.getAttribute("1st testcase"));
 	}
 
-	@Test(priority = 2)
-	public void freshWorksTitleTest() {
-		System.out.println("running title test...");
-		System.out.println(driver.getTitle());
-		assertEquals(driver.getTitle(), "A fresh approach to customer engagement");
-	}
-
-	@Test(priority = 3)
-	public void getFooterLinksTest() {
-		List<WebElement> footerLinksList = driver.findElements(By.cssSelector("ul.footer-nav li a"));
-		footerLinksList.forEach(ele -> System.out.println(ele.getText()));
-		assertEquals(footerLinksList.size(), 35);
-	}
+//	@Test(priority = 2)
+//	public void freshWorksTitleTest() {
+//		System.out.println("running title test...");
+//		System.out.println(driver.getTitle());
+//		assertEquals(driver.getTitle(), "A fresh approach to customer engagement");
+//	}
+//
+//	@Test(priority = 3)
+//	public void getFooterLinksTest() {
+//		List<WebElement> footerLinksList = driver.findElements(By.cssSelector("ul.footer-nav li a"));
+//		footerLinksList.forEach(ele -> System.out.println(ele.getText()));
+//		assertEquals(footerLinksList.size(), 35);
+//	}
 
 	@AfterMethod
 	public void tearDown() {
