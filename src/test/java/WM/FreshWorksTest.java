@@ -60,7 +60,7 @@ public class FreshWorksTest {
 	}
 
 	@Test(priority = 1)
-	public void freshWorkslogoTest() {
+	public void GoogleSearchTest1() {
 
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		driver.findElement(By.name("q")).sendKeys("cheese" + Keys.ENTER);
@@ -68,6 +68,17 @@ public class FreshWorksTest {
 		assertEquals(driver.getTitle(), "cheese - Google Search");
 		System.out.println(firstResult.getAttribute("1st testcase"));
 	}
+
+	@Test(priority = 1)
+	public void GoogleSearchTest2() {
+
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		driver.findElement(By.name("q")).sendKeys("tomato" + Keys.ENTER);
+		WebElement firstResult = wait.until(presenceOfElementLocated(By.cssSelector("h3")));
+		assertEquals(driver.getTitle(), "cheese - Google Search");
+		System.out.println(firstResult.getAttribute("1st testcase"));
+	}
+
 
 //	@Test(priority = 2)
 //	public void freshWorksTitleTest() {
